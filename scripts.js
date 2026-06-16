@@ -1,27 +1,35 @@
-const BASE_API = '/api';
+// 1. Point directly to your live cloud API
+const BASE_API = 'https://business-inventory.onrender.com/api';
 
 async function fetchDashboard() {
-    const res = await fetch(`${BASE_API}/food/all`);
-    const data = await res.json();
-    const foodGrid = document.getElementById('foodGrid');
-    const bevGrid = document.getElementById('beverageGrid');
-    
-    foodGrid.innerHTML = ''; bevGrid.innerHTML = '';
+    try {
+        const res = await fetch(`${BASE_API}/food/all`);
+        const data = await res.json();
+        const foodGrid = document.getElementById('foodGrid');
+        const bevGrid = document.getElementById('beverageGrid');
+        
+        foodGrid.innerHTML = ''; bevGrid.innerHTML = '';
 
-    data.items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = `card ${item.stock < 5 ? 'low-stock' : ''}`;
-        card.innerHTML = `
-            <h3>${item.name}</h3>
-            <div class="stock-num">${item.stock}</div>
-            <div class="controls">
-                <button onclick="updateStock(${item.id}, ${item.stock - 1})">-</button>
-                <button onclick="updateStock(${item.id}, ${item.stock + 1})">+</button>
-            </div>
-            <button class="btn-delete" onclick="deleteItem(${item.id})">Delete</button>
-        `;
-        (item.category === 'Beverage') ? bevGrid.appendChild(card) : foodGrid.appendChild(card);
-    });
+        // 2. Bulletproof data handler: gracefully handle different Turso JSON formats
+        const itemsArray = data.items || data.rows || (Array.isArray(data) ? data : []);
+
+        itemsArray.forEach(item => {
+            const card = document.createElement('div');
+            card.className = `card ${item.stock < 5 ? 'low-stock' : ''}`;
+            card.innerHTML = `
+                <h3>${item.name}</h3>
+                <div class="stock-num">${item.stock}</div>
+                <div class="controls">
+                    <button onclick="updateStock(${item.id}, ${item.stock - 1})">-</button>
+                    <button onclick="updateStock(${item.id}, ${item.stock + 1})">+</button>
+                </div>
+                <button class="btn-delete" onclick="deleteItem(${item.id})">Delete</button>
+            `;
+            (item.category === 'Beverage') ? bevGrid.appendChild(card) : foodGrid.appendChild(card);
+        });
+    } catch (error) {
+        console.error("Failed to fetch dashboard data:", error);
+    }
 }
 
 async function addItem() {
