@@ -1,4 +1,4 @@
-const BASE_API = 'http://localhost:3000/api';
+const BASE_API = '/api';
 
 async function fetchDashboard() {
     const res = await fetch(`${BASE_API}/food/all`);
