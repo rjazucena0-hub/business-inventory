@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Business Inventory Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Inventory Dashboard</h1>
+        
+        <div class="form-container">
+            <input type="text" id="itemName" placeholder="Item Name">
+            <input type="number" id="itemStock" placeholder="Stock Level">
+            <select id="itemCategory">
+                <option value="Food">Food</option>
+                <option value="Beverage">Beverage</option>
+            </select>
+            <button class="btn-primary" onclick="addItem()">+ Add Item</button>
+        </div>
+
+        <h2 class="section-title">Food Stocks</h2>
+        <div id="foodGrid" class="grid"></div>
+
+        <hr class="divider">
+
+        <h2 class="section-title">Beverage Stocks</h2>
+        <div id="beverageGrid" class="grid"></div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
