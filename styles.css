@@ -1,20 +1,27 @@
+/* 1. Global Reset: Stops padding from making elements wider than the screen */
+* { box-sizing: border-box; }
+
 :root { --primary: #4f46e5; --danger: #ef4444; --bg: #f3f4f6; }
 
-body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 40px 20px; color: #374151; }
+/* 2. Added margin: 0 to prevent sideways scrolling */
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 40px 20px; color: #374151; margin: 0; }
 .container { max-width: 900px; margin: 0 auto; }
 
+/* 3. Added flex-wrap so inputs don't squish */
 .form-container { 
     background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-    display: flex; gap: 10px; margin-bottom: 40px;
+    display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap;
 }
 
-input, select { padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; flex: 1; }
+input, select { padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; flex: 1; min-width: 150px; }
 .btn-primary { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn-primary:hover { background: #4338ca; }
 
 .section-title { font-size: 1.25rem; color: #6b7280; margin-bottom: 20px; }
 .divider { margin: 40px 0; border: 0; border-top: 1px solid #d1d5db; }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+/* Changed auto-fill to auto-fit so cards fill empty space perfectly */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
 
 .card { 
     background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -23,10 +30,37 @@ input, select { padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; fl
 .card:hover { transform: translateY(-5px); }
 .card.low-stock { border-top-color: var(--danger); background: #fef2f2; }
 .stock-num { font-size: 2rem; font-weight: bold; margin: 10px 0; color: #1f2937; }
-.controls button { margin: 0 5px; padding: 5px 15px; border-radius: 6px; cursor: pointer; border: 1px solid #d1d5db; }
 
+/* Made + and - buttons taller for touchscreen tapping */
+.controls button { 
+    margin: 0 5px; padding: 8px 18px; border-radius: 6px; cursor: pointer; 
+    border: 1px solid #d1d5db; background: white; font-size: 1.2rem;
+}
+.controls button:hover { background: #f3f4f6; }
+
+/* Made Delete button span the full width of the card for a cleaner look */
 .btn-delete { 
-    background: #fee2e2; color: #dc2626; border: none; 
-    padding: 5px 10px; border-radius: 6px; cursor: pointer; margin-top: 10px;
-    font-size: 0.8rem;
+    background: #fee2e2; color: #dc2626; border: none; width: 100%;
+    padding: 10px 10px; border-radius: 6px; cursor: pointer; margin-top: 15px;
+    font-size: 0.9rem; font-weight: bold;
+}
+.btn-delete:hover { background: #fca5a5; }
+
+/* ========================================= */
+/* 📱 MOBILE RESPONSIVE RULES (Media Queries) */
+/* ========================================= */
+@media (max-width: 600px) {
+    body { 
+        padding: 20px 15px; /* Less empty space at the top on small screens */
+    }
+    
+    .form-container { 
+        flex-direction: column; /* Stacks the inputs vertically! */
+        gap: 15px; 
+    }
+    
+    .btn-primary { 
+        width: 100%; /* Big tap target for the Add button */
+        padding: 15px;
+    }
 }
