@@ -3,31 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <link rel="stylesheet" href="styles.css">
-    <title>Business Inventory Dashboard</title>
+    <title>FreshStock — Inventory Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Inventory Dashboard</h1>
-        
-        <div class="form-container">
-            <input type="text" id="itemName" placeholder="Item Name">
-            <input type="number" id="itemStock" placeholder="Stock Level">
-            <select id="itemCategory">
-                <option value="Food">Food</option>
-                <option value="Beverage">Beverage</option>
-            </select>
-            <button class="btn-primary" onclick="addItem()">+ Add Item</button>
-        </div>
+    <div class="app-shell">
+        <header class="dashboard-header">
+            <div class="header-brand">
+                <div class="brand-icon" aria-hidden="true">
+                    <i class="ph ph-leaf"></i>
+                </div>
+                <div>
+                    <h1>FreshStock</h1>
+                    <p class="header-subtitle">Food &amp; Beverage Inventory</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <span class="meta-pill">
+                    <i class="ph ph-clock"></i>
+                    Live inventory
+                </span>
+            </div>
+        </header>
 
-        <h2 class="section-title">Food Stocks</h2>
-        <div id="foodGrid" class="grid"></div>
+        <main class="container">
+            <!-- Low Stock Alert Banner -->
+            <section id="lowStockSection" class="low-stock-section" aria-live="polite">
+                <div class="low-stock-section__header">
+                    <div class="low-stock-section__title">
+                        <i class="ph ph-warning-circle"></i>
+                        <h2>Low Stock Alerts</h2>
+                    </div>
+                    <span id="lowStockCount" class="low-stock-count">0 items</span>
+                </div>
+                <div id="lowStockBanner" class="low-stock-banner">
+                    <p class="low-stock-empty">
+                        <i class="ph ph-check-circle"></i>
+                        All items are well stocked — no alerts right now.
+                    </p>
+                </div>
+            </section>
 
-        <hr class="divider">
+            <!-- Add Item Form -->
+            <section class="panel add-item-panel">
+                <div class="panel-header">
+                    <i class="ph ph-plus-circle"></i>
+                    <h2>Add New Item</h2>
+                </div>
+                <div class="form-container">
+                    <label class="field">
+                        <span class="field-label"><i class="ph ph-tag"></i> Item Name</span>
+                        <input type="text" id="itemName" placeholder="e.g. Roma Tomatoes">
+                    </label>
+                    <label class="field">
+                        <span class="field-label"><i class="ph ph-package"></i> Stock Level</span>
+                        <input type="number" id="itemStock" placeholder="0" min="0">
+                    </label>
+                    <label class="field">
+                        <span class="field-label"><i class="ph ph-folders"></i> Category</span>
+                        <select id="itemCategory">
+                            <option value="Food">Food</option>
+                            <option value="Beverage">Beverage</option>
+                        </select>
+                    </label>
+                    <button class="btn-primary" onclick="addItem()">
+                        <i class="ph ph-plus"></i>
+                        Add Item
+                    </button>
+                </div>
+            </section>
 
-        <h2 class="section-title">Beverage Stocks</h2>
-        <div id="beverageGrid" class="grid"></div>
+            <!-- Food Inventory -->
+            <section class="inventory-section">
+                <div class="section-heading">
+                    <div class="section-title">
+                        <i class="ph ph-cooking-pot"></i>
+                        <h2>Food Stocks</h2>
+                    </div>
+                    <span class="section-badge">Kitchen</span>
+                </div>
+                <div id="foodGrid" class="grid"></div>
+            </section>
+
+            <hr class="divider">
+
+            <!-- Beverage Inventory -->
+            <section class="inventory-section">
+                <div class="section-heading">
+                    <div class="section-title">
+                        <i class="ph ph-wine"></i>
+                        <h2>Beverage Stocks</h2>
+                    </div>
+                    <span class="section-badge section-badge--beverage">Bar</span>
+                </div>
+                <div id="beverageGrid" class="grid"></div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>FreshStock Inventory System</p>
+        </footer>
     </div>
     <script src="scripts.js"></script>
 </body>
